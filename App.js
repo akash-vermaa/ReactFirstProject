@@ -1,7 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, ImageBackground } from 'react-native';
 import React from 'react';
 import Forecast from './components/Forecast';
+import Navbar from './components/Navbar';
+import DataFromWeb from './components/DataFromWeb';
+import bgImage from './assets/bg_landscape.jpg';
 
 export default function App() {
   const [zip, setZip] = React.useState("");
@@ -20,27 +23,26 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
-      <Forecast
-        main = {forecast.main}
-        description = {forecast.description}
-        temperature = {forecast.temperature}
-      />
-      <TextInput
-        style={styles.input} 
-        name='tin_zip'
-        onSubmitEditing={handleTextChange}
-        value={zip}
-      />
-      <Text style={styles.welcome}>
-        You input {zip}
-      </Text>
+      <Navbar />
+      <DataFromWeb/>
+      <ImageBackground source={bgImage}
+        resizeMode='cover'
+        style={styles.backdrop}>
+        
+        <Forecast
+          main = {forecast.main}
+          description = {forecast.description}
+          temperature = {forecast.temperature}
+        />
+      </ImageBackground>
+      
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   appContainer: {
-    flex: 2,
+    flex: 1,
     backgroundColor: '#f5fcff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -59,4 +61,9 @@ const styles = StyleSheet.create({
     height: 30,
     borderRadius:20,
   },
+  backdrop:{
+    width:'100%',
+    flex:1,
+    justifyContent:'center',
+}
 });
